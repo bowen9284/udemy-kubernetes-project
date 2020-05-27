@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+install:
+  - echo "nothing needs to be installed"
+
+before_script:
+  - echo "no tests"
+
+script:
+  - docker --version # print the version for logging
+  - cd udagram-api-user
+  - docker build -t udagram-api-user .
+  - docker tag udagram-api-user bowen9284/udagram-api-user:latest
+
+  - cd ../udagram-api-feed
+  - docker build -t udagram-api-feed .
+  - docker tag udagram-api-feed bowen9284/udagram-api-feed:latest
+
+  - cd ../udagram-frontend
+  - docker build -t udagram-frontend .
+  - docker tag udagram-frontend bowen9284/udagram-frontend:latest
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push bowen9284/udagram-api-user
+  - docker push bowen9284/udagram-api-feed
+  - docker push bowen9284/udagram-frontend

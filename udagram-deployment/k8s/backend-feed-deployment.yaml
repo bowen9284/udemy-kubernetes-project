@@ -12,7 +12,7 @@ spec:
         service: backend-feed
     spec:
       containers:
-      - image: udagram-feed
+      - image: bowen9284/udagram-feed
         name: backend-feed
         imagePullPolicy: Always  
         resources:
